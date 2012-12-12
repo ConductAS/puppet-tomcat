@@ -5,6 +5,7 @@ class tomcat::config(
   $roles      = hiera('tomcat_roles'),
   $users      = hiera('tomcat_users'),
   $autodeploy = hiera('tomcat_autodeploy'),
+  $jdbc_pgsql = undef,
   ) {
   file {
     "${conf_dir}/tomcat-users.xml":
@@ -14,5 +15,9 @@ class tomcat::config(
     "${conf_dir}/server.xml":
       ensure  => present,
       content => template('tomcat/server.xml.erb');
+
+    "${conf_dir}/context.xml":
+      ensure  => present,
+      content => template('tomcat/context.xml.erb');
   }
 }
